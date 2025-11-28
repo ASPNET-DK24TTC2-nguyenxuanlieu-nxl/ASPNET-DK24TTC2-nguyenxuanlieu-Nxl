@@ -1,0 +1,84 @@
+@model List<Shopbanhangapple.Models.CartItem>
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<div class="container my-5">
+    <h1 class="mb-4">Thanh toán</h1>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Thông tin giao hàng</h4>
+                    
+                    <form action="/Orders/Checkout" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3">
+                            <label for="shippingAddress" class="form-label">Địa chỉ giao hàng *</label>
+                            <textarea class="form-control" id="shippingAddress" name="shippingAddress" 
+                                      rows="3" required placeholder="Nhập địa chỉ đầy đủ của bạn"></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Phương thức thanh toán *</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" 
+                                       id="paymentCOD" value="Thanh toán khi nhận hàng" checked />
+                                <label class="form-check-label" for="paymentCOD">
+                                    <i class="fas fa-money-bill-wave"></i> Thanh toán khi nhận hàng (COD)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" 
+                                       id="paymentInstallment" value="Trả góp hàng tháng" />
+                                <label class="form-check-label" for="paymentInstallment">
+                                    <i class="fas fa-credit-card"></i> Trả góp hàng tháng (0% lãi suất)
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-check-circle"></i> Xác nhận đặt hàng
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="mb-4">Đơn hàng của bạn</h4>
+                
+                    @foreach (var item in Model)
+                    {
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>@item.ProductName x @item.Quantity</span>
+                            <strong>@item.Total.ToString("N0") đ</strong>
+                        </div>
+                        @if (!string.IsNullOrEmpty(item.Configuration))
+                        {
+                            <p class="text-muted small ms-3">@item.Configuration</p>
+                        }
+                    }
+                
+                    <hr />
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tạm tính:</span>
+                        <strong>@Model.Sum(c => c.Total).ToString("N0") đ</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Phí vận chuyển:</span>
+                        <strong class="text-success">Miễn phí</strong>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <h5>Tổng cộng:</h5>
+                        <h5 class="text-primary">@Model.Sum(c => c.Total).ToString("N0") đ</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

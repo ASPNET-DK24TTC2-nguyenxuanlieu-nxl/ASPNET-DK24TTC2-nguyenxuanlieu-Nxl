@@ -1,0 +1,68 @@
+@model List<Shopbanhangapple.Models.Product>
+@{
+    ViewData["Title"] = "Sản phẩm";
+}
+
+<div class="container my-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="fw-bold">Danh sách sản phẩm</h1>
+            <p class="text-muted">Khám phá các sản phẩm Apple chính hãng</p>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="btn-group flex-wrap" role="group">
+                <a asp-action="Index" class="btn btn-outline-primary">Tất cả</a>
+                <a asp-action="Index" asp-route-categoryId="1" class="btn btn-outline-primary">iPhone</a>
+                <a asp-action="Index" asp-route-categoryId="2" class="btn btn-outline-primary">Mac</a>
+                <a asp-action="Index" asp-route-categoryId="3" class="btn btn-outline-primary">iPad</a>
+                <a asp-action="Index" asp-route-categoryId="4" class="btn btn-outline-primary">Watch</a>
+                <a asp-action="Index" asp-route-categoryId="5" class="btn btn-outline-primary">Phụ kiện</a>
+            </div>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-4">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@(string.IsNullOrEmpty(product.ImageUrl) ? "https://via.placeholder.com/400x300?text=No+Image" : product.ImageUrl)" 
+                             class="card-img-top" alt="@product.Name" style="height: 250px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-secondary mb-2 align-self-start">@product.Category?.Name</span>
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text text-muted small">@product.Description</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h4 class="text-primary mb-0">@product.Price.ToString("N0") đ</h4>
+                                    @if (product.Stock > 0)
+                                    {
+                                        <span class="badge bg-success">Còn @product.Stock</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Hết hàng</span>
+                                    }
+                                </div>
+                                <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary w-100">
+                                    <i class="fas fa-eye"></i> Xem chi tiết
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            <i class="fas fa-info-circle"></i> Không tìm thấy sản phẩm nào.
+        </div>
+    }
+</div>

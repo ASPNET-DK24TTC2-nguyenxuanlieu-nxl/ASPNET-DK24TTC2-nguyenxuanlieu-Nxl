@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Apple Store Vietnam</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="apple-header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <i class="fab fa-apple"></i> Apple Store
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Products">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                Danh mục
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/Products?categoryId=1">iPhone</a></li>
+                                <li><a class="dropdown-item" href="/Products?categoryId=2">Mac</a></li>
+                                <li><a class="dropdown-item" href="/Products?categoryId=3">iPad</a></li>
+                                <li><a class="dropdown-item" href="/Products?categoryId=4">Watch</a></li>
+                                <li><a class="dropdown-item" href="/Products?categoryId=5">Phụ kiện</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Orders">
+                                    <i class="fas fa-box"></i> Đơn hàng
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">
+                                    <i class="fas fa-user"></i> Tài khoản
+                                </a>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin">
+                                        <i class="fas fa-cog"></i> Admin
+                                    </a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")">
+                                    <button type="submit" class="btn btn-link nav-link">
+                                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+                                    <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
+                                    <i class="fas fa-user-plus"></i> Đăng ký
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link cart-link" href="/Cart">
+                                <i class="fas fa-shopping-bag"></i> Giỏ hàng
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="apple-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>Mua sắm và Tìm hiểu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">iPhone</a></li>
+                        <li><a href="#">Mac</a></li>
+                        <li><a href="#">iPad</a></li>
+                        <li><a href="#">Watch</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Dịch vụ</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Apple Music</a></li>
+                        <li><a href="#">Apple TV+</a></li>
+                        <li><a href="#">iCloud</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Tài khoản</h5>
+                    <ul class="list-unstyled">
+                        <li><a asp-area="Identity" asp-page="/Account/Manage/Index">Quản lý Apple ID</a></li>
+                        <li><a href="/Orders">Đơn hàng của tôi</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Về Apple Store</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/Home/About">Giới thiệu</a></li>
+                        <li><a href="/Home/Privacy">Chính sách bảo mật</a></li>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <p>&copy; 2025 Apple Store Vietnam. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

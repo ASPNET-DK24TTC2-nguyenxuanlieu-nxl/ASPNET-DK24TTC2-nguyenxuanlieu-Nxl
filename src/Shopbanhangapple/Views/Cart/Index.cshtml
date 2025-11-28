@@ -1,0 +1,107 @@
+@model List<Shopbanhangapple.Models.CartItem>
+@{
+    ViewData["Title"] = "Giỏ hàng";
+}
+
+<div class="container my-4">
+    <h1 class="fw-bold mb-4">Giỏ hàng của bạn</h1>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            <div class="col-lg-8">
+                @foreach (var item in Model)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "https://via.placeholder.com/100x100?text=No+Image" : item.ImageUrl)" 
+                                     alt="@item.ProductName" class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="mb-1">@item.ProductName</h5>
+                                @if (!string.IsNullOrEmpty(item.Configuration))
+                                {
+                                    <p class="text-muted small mb-0">@item.Configuration</p>
+                                }
+                            </div>
+                            <div class="col-md-2">
+                                <form asp-action="UpdateQuantity" method="post" class="d-inline">
+                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                    <input type="hidden" name="configuration" value="@item.Configuration" />
+                                    <input type="number" name="quantity" value="@item.Quantity" 
+                                           min="1" class="form-control" onchange="this.form.submit()" />
+                                </form>
+                            </div>
+                            <div class="col-md-2">
+                                <strong class="text-primary">@item.Total.ToString("N0") đ</strong>
+                            </div>
+                            <div class="col-md-2">
+                                <form asp-action="RemoveFromCart" method="post">
+                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                    <input type="hidden" name="configuration" value="@item.Configuration" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Tóm tắt đơn hàng</h5>
+                    </div>
+                    <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tạm tính:</span>
+                        <strong>@Model.Sum(c => c.Total).ToString("N0") đ</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Phí vận chuyển:</span>
+                        <strong class="text-success">Miễn phí</strong>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between mb-4">
+                        <h5>Tổng cộng:</h5>
+                        <h5 class="text-primary">@Model.Sum(c => c.Total).ToString("N0") đ</h5>
+                    </div>
+                    
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a href="/Orders/Checkout" class="btn btn-primary w-100 btn-lg mb-2">
+                            <i class="fas fa-credit-card"></i> Thanh toán
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="/Orders/Checkout" 
+                           class="btn btn-primary w-100 btn-lg mb-2">
+                            <i class="fas fa-sign-in-alt"></i> Đăng nhập để thanh toán
+                        </a>
+                    }
+                    
+                        <a href="/Products" class="btn btn-outline-secondary w-100">
+                            <i class="fas fa-arrow-left"></i> Tiếp tục mua sắm
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-shopping-bag fa-4x text-muted mb-3"></i>
+            <h3>Giỏ hàng trống</h3>
+            <p class="text-muted">Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm</p>
+            <a href="/Products" class="btn btn-primary mt-3">
+                <i class="fas fa-shopping-bag"></i> Khám phá sản phẩm
+            </a>
+        </div>
+    }
+</div>

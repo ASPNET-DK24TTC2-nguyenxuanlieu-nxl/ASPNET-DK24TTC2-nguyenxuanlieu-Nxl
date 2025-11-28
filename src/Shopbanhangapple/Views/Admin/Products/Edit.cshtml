@@ -1,0 +1,113 @@
+@model Shopbanhangapple.Models.Product
+@{
+    ViewData["Title"] = "Chỉnh sửa sản phẩm";
+}
+
+<div class="container my-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h1><i class="fas fa-edit"></i> Chỉnh sửa sản phẩm</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Tên sản phẩm *</label>
+                            <input asp-for="Name" class="form-control" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Mô tả</label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Price" class="form-label">Giá (VNĐ) *</label>
+                                <input asp-for="Price" type="number" class="form-control" required />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Stock" class="form-label">Số lượng tồn kho *</label>
+                                <input asp-for="Stock" type="number" class="form-control" required />
+                                <span asp-validation-for="Stock" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CategoryId" class="form-label">Danh mục *</label>
+                            <select asp-for="CategoryId" class="form-select" required>
+                                @foreach (var category in ViewBag.Categories as List<Shopbanhangapple.Models.Category>)
+                                {
+                                    <option value="@category.Id">@category.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ImageUrl" class="form-label">URL hình ảnh</label>
+                            <input asp-for="ImageUrl" class="form-control" />
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="TechnicalSpecs" class="form-label">Thông số kỹ thuật</label>
+                            <textarea asp-for="TechnicalSpecs" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="TechnicalSpecs" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="IsCustomizable" class="form-check-input" type="checkbox" />
+                            <label asp-for="IsCustomizable" class="form-check-label">
+                                Cho phép tùy chỉnh cấu hình
+                            </label>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/Admin/Products" class="btn btn-apple-outline">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                            <button type="submit" class="btn btn-apple">
+                                <i class="fas fa-save"></i> Cập nhật
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Thông tin sản phẩm</h5>
+                    <p><strong>ID:</strong> @Model.Id</p>
+                    <p><strong>Danh mục hiện tại:</strong> @Model.Category?.Name</p>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Hình ảnh hiện tại</h5>
+                        <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

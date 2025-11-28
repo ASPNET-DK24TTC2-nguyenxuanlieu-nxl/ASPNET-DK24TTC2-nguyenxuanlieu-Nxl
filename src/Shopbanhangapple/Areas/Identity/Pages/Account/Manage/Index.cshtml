@@ -1,0 +1,124 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-user-circle"></i> Thông tin tài khoản
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <partial name="_StatusMessage" for="StatusMessage" />
+                    
+                    <form id="profile-form" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Username" class="form-label">
+                                        <i class="fas fa-envelope"></i> Email / Tên đăng nhập
+                                    </label>
+                                    <input asp-for="Username" class="form-control form-control-lg" disabled />
+                                    <small class="text-muted">Email không thể thay đổi</small>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Input.PhoneNumber" class="form-label">
+                                        <i class="fas fa-phone"></i> Số điện thoại
+                                    </label>
+                                    <input asp-for="Input.PhoneNumber" class="form-control form-control-lg" 
+                                           placeholder="Nhập số điện thoại của bạn" />
+                                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Lưu ý:</strong> Thông tin này sẽ được sử dụng để liên hệ khi có vấn đề về đơn hàng.
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button id="update-profile-button" type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save"></i> Lưu thay đổi
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-shield-alt"></i> Bảo mật tài khoản
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                        <div>
+                            <h6 class="mb-1">
+                                <i class="fas fa-key"></i> Mật khẩu
+                            </h6>
+                            <p class="text-muted mb-0 small">Thay đổi mật khẩu của bạn</p>
+                        </div>
+                        <a asp-page="./ChangePassword" class="btn btn-outline-primary">
+                            Đổi mật khẩu
+                        </a>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">
+                                <i class="fas fa-envelope-open-text"></i> Email
+                            </h6>
+                            <p class="text-muted mb-0 small">Cập nhật địa chỉ email</p>
+                        </div>
+                        <a asp-page="./Email" class="btn btn-outline-primary">
+                            Thay đổi Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mt-4 border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> Vùng nguy hiểm
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">Xóa tài khoản</h6>
+                            <p class="text-muted mb-0 small">
+                                Xóa vĩnh viễn tài khoản và tất cả dữ liệu liên quan
+                            </p>
+                        </div>
+                        <a asp-page="./DeletePersonalData" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Xóa tài khoản
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <a href="/" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay lại trang chủ
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

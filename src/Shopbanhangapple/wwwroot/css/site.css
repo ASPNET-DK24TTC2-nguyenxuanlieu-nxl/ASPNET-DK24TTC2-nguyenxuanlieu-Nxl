@@ -1,0 +1,351 @@
+/* Apple Store Theme */
+:root {
+    --apple-dark: #1d1d1f;
+    --apple-gray: #86868b;
+    --apple-light-gray: #f5f5f7;
+    --apple-blue: #0071e3;
+    --apple-hover-blue: #0077ed;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--apple-dark);
+    background-color: #fff;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+.apple-header {
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: saturate(180%) blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.apple-header .navbar {
+    padding: 0.5rem 0;
+}
+
+.apple-header .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #f5f5f7 !important;
+    transition: opacity 0.3s;
+}
+
+.apple-header .navbar-brand:hover {
+    opacity: 0.8;
+}
+
+.apple-header .nav-link {
+    color: #f5f5f7 !important;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem !important;
+    transition: opacity 0.3s;
+}
+
+.apple-header .nav-link:hover {
+    opacity: 0.7;
+}
+
+.apple-header .btn-link {
+    color: #f5f5f7 !important;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.apple-header .dropdown-menu {
+    background-color: rgba(0, 0, 0, 0.9);
+    border: none;
+    border-radius: 12px;
+    padding: 0.5rem 0;
+}
+
+.apple-header .dropdown-item {
+    color: #f5f5f7;
+    padding: 0.5rem 1.5rem;
+    transition: background-color 0.3s;
+}
+
+.apple-header .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.hero-section .btn {
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+}
+
+/* Product Cards */
+.product-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.product-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.product-card-body {
+    padding: 1.5rem;
+}
+
+.product-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--apple-dark);
+}
+
+.product-card-text {
+    color: var(--apple-gray);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--apple-dark);
+    margin-bottom: 1rem;
+}
+
+.product-category {
+    display: inline-block;
+    background-color: var(--apple-light-gray);
+    color: var(--apple-gray);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn-apple {
+    background-color: var(--apple-blue);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-apple:hover {
+    background-color: var(--apple-hover-blue);
+    color: white;
+    transform: scale(1.02);
+}
+
+.btn-apple-outline {
+    background-color: transparent;
+    color: var(--apple-blue);
+    border: 2px solid var(--apple-blue);
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn-apple-outline:hover {
+    background-color: var(--apple-blue);
+    color: white;
+}
+
+/* Cart */
+.cart-item {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.cart-summary {
+    background: var(--apple-light-gray);
+    border-radius: 12px;
+    padding: 2rem;
+    position: sticky;
+    top: 100px;
+}
+
+/* Footer */
+.apple-footer {
+    background-color: var(--apple-light-gray);
+    padding: 3rem 0 1.5rem;
+    margin-top: 4rem;
+}
+
+.apple-footer h5 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--apple-dark);
+}
+
+.apple-footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.apple-footer a {
+    color: var(--apple-gray);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.3s;
+}
+
+.apple-footer a:hover {
+    color: var(--apple-dark);
+}
+
+.apple-footer p {
+    color: var(--apple-gray);
+    font-size: 0.875rem;
+}
+
+/* Admin Dashboard */
+.admin-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admin-card h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.admin-card p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Product Details */
+.product-details-img {
+    width: 100%;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.product-config-option {
+    border: 2px solid var(--apple-light-gray);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.product-config-option:hover {
+    border-color: var(--apple-blue);
+    background-color: rgba(0, 113, 227, 0.05);
+}
+
+.product-config-option.selected {
+    border-color: var(--apple-blue);
+    background-color: rgba(0, 113, 227, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1.2rem;
+    }
+
+    .product-card img {
+        height: 200px;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Order Status Badge */
+.order-status {
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.order-status.placed {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.order-status.shipping {
+    background-color: #cfe2ff;
+    color: #084298;
+}
+
+.order-status.delivered {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}

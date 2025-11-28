@@ -1,0 +1,162 @@
+@model Shopbanhangapple.Controllers.Admin.CustomerDetailsViewModel
+@{
+    ViewData["Title"] = "Chi tiết khách hàng";
+}
+
+<div class="container-fluid my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-user"></i> Chi tiết khách hàng</h2>
+        <a href="/Admin/Customers" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> Thông tin cá nhân</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small">Email</label>
+                        <p class="mb-0">
+                            <i class="fas fa-envelope"></i> @Model.Email
+                            @if (Model.EmailConfirmed)
+                            {
+                                <span class="badge bg-success ms-2">
+                                    <i class="fas fa-check"></i> Đã xác thực
+                                </span>
+                            }
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-muted small">Số điện thoại</label>
+                        <p class="mb-0">
+                            @if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                            {
+                                <i class="fas fa-phone"></i> @Model.PhoneNumber
+                            }
+                            else
+                            {
+                                <span class="text-muted">Chưa cập nhật</span>
+                            }
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-muted small">Vai trò</label>
+                        <p class="mb-0">
+                            @if (Model.Roles.Contains("Admin"))
+                            {
+                                <span class="badge bg-danger">@Model.Roles</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-primary">@Model.Roles</span>
+                            }
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-muted small">ID</label>
+                        <p class="mb-0 small text-muted">@Model.Id</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-chart-bar"></i> Thống kê</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
+                        <span>Tổng đơn hàng:</span>
+                        <strong class="text-primary">@Model.Orders.Count đơn</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
+                        <span>Tổng chi tiêu:</span>
+                        <strong class="text-success">@Model.Orders.Sum(o => o.TotalAmount).ToString("N0") đ</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Trung bình/đơn:</span>
+                        <strong class="text-info">
+                            @(Model.Orders.Any() ? (Model.Orders.Sum(o => o.TotalAmount) / Model.Orders.Count).ToString("N0") : "0") đ
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-shopping-cart"></i> Lịch sử đơn hàng</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Orders.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Mã đơn</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var order in Model.Orders)
+                                    {
+                                        <tr>
+                                            <td><strong>#@order.Id</strong></td>
+                                            <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>
+                                                <small class="text-muted">
+                                                    @order.OrderDetails.Count sản phẩm
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <strong class="text-primary">@order.TotalAmount.ToString("N0") đ</strong>
+                                            </td>
+                                            <td>
+                                                @if (order.Status == "Đã đặt hàng")
+                                                {
+                                                    <span class="badge bg-warning">@order.Status</span>
+                                                }
+                                                else if (order.Status == "Đang vận chuyển")
+                                                {
+                                                    <span class="badge bg-info">@order.Status</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-success">@order.Status</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a href="/Admin/Orders/Details/@order.Id" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Khách hàng chưa có đơn hàng nào</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

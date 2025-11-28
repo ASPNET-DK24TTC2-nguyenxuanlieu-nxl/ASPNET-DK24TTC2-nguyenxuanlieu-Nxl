@@ -1,0 +1,85 @@
+@model Shopbanhangapple.Models.Product
+@{
+    ViewData["Title"] = "Xóa sản phẩm";
+}
+
+<div class="container my-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="text-danger"><i class="fas fa-trash"></i> Xóa sản phẩm</h1>
+        </div>
+    </div>
+
+    <div class="alert alert-danger">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Cảnh báo:</strong> Bạn có chắc chắn muốn xóa sản phẩm này? Hành động này không thể hoàn tác!
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Thông tin sản phẩm</h5>
+                    <dl class="row">
+                        <dt class="col-sm-3">ID</dt>
+                        <dd class="col-sm-9">@Model.Id</dd>
+
+                        <dt class="col-sm-3">Tên sản phẩm</dt>
+                        <dd class="col-sm-9">@Model.Name</dd>
+
+                        <dt class="col-sm-3">Mô tả</dt>
+                        <dd class="col-sm-9">@Model.Description</dd>
+
+                        <dt class="col-sm-3">Danh mục</dt>
+                        <dd class="col-sm-9">@Model.Category?.Name</dd>
+
+                        <dt class="col-sm-3">Giá</dt>
+                        <dd class="col-sm-9">@Model.Price.ToString("N0") đ</dd>
+
+                        <dt class="col-sm-3">Tồn kho</dt>
+                        <dd class="col-sm-9">@Model.Stock</dd>
+
+                        <dt class="col-sm-3">Thông số kỹ thuật</dt>
+                        <dd class="col-sm-9">@Model.TechnicalSpecs</dd>
+
+                        <dt class="col-sm-3">Tùy chỉnh</dt>
+                        <dd class="col-sm-9">
+                            @if (Model.IsCustomizable)
+                            {
+                                <span class="badge bg-success">Có</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Không</span>
+                            }
+                        </dd>
+                    </dl>
+
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/Admin/Products" class="btn btn-apple-outline">
+                                <i class="fas fa-arrow-left"></i> Quay lại
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Xác nhận xóa
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Hình ảnh</h5>
+                        <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
